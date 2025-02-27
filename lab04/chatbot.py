@@ -41,10 +41,12 @@ def main():
     dispatcher.add_handler(CommandHandler("set", set_key))       # /set <key> <value>
     dispatcher.add_handler(CommandHandler("get", get_key))       # /get <key>
     dispatcher.add_handler(CommandHandler("delete", delete_key)) # /delete <key>
+    dispatcher.add_handler(CommandHandler("hello", hello))       # /hello <name> -> Greeting handler
     
     # Start the bot
     updater.start_polling()
     updater.idle()
+
 #Handle the ChatGPT interaction
 def equiped_chatgpt(update, context):
     global chatgpt
@@ -63,10 +65,22 @@ def echo(update, context):
     logging.info("Context: " + str(context))
     context.bot.send_message(chat_id=update.effective_chat.id, text=reply_message)
 
-# Define command handlers
-def help_command(update: Update, context: CallbackContext) -> None:
-    """Send a message when the command /help is issued."""
-    update.message.reply_text('Helping you helping you.')
+# # Define command handlers
+# def help_command(update: Update, context: CallbackContext) -> None:
+#     """Send a message when the command /help is issued."""
+#     update.message.reply_text('Helping you helping you.')
+# Define the /hello command handler
+def hello(update: Update, context: CallbackContext) -> None:
+    """Send a personalized greeting when the command /hello is issued."""
+    try:
+        if len(context.args) == 1:
+            name = context.args[0]  # Extract the name from the command
+            greeting = f"Good day, {name}!"
+            update.message.reply_text(greeting)
+        else:
+            update.message.reply_text('Usage: /hello <name>')
+    except Exception as e:
+        update.message.reply_text(f'Error: {str(e)}')
 
 def add(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /add is issued."""
