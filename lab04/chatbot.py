@@ -37,7 +37,7 @@ def main():
 
     # Register other command handlers
     dispatcher.add_handler(CommandHandler("add", add))
-    dispatcher.add_handler(CommandHandler("help", help_command))
+    # dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(CommandHandler("set", set_key))       # /set <key> <value>
     dispatcher.add_handler(CommandHandler("get", get_key))       # /get <key>
     dispatcher.add_handler(CommandHandler("delete", delete_key)) # /delete <key>
