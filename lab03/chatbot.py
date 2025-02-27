@@ -1,15 +1,15 @@
-## 此文件基于版本 13.7 的 Python Telegram 聊天机器人
-## 和 urllib3 版本 1.26.18
+## this file is based on version 13.7 of python telegram chatbot
+## and version 1.26.18 of urllib3
 ## chatbot.py
 
 import telegram
 from telegram.ext import Updater, MessageHandler, Filters
-# MessageHandler 用于所有消息更新
+# The messageHandler is used for all message updates
 import configparser
 import logging
 
 def main():
-    # 加载你的令牌并为你的机器人创建一个 Updater
+    # Load your token and create an Updater for your Bot
     config = configparser.ConfigParser()
     config.read('config.ini', encoding='utf-8-sig')
     print(repr(config['TELEGRAM']['ACCESS_TOKEN']))
@@ -17,17 +17,17 @@ def main():
     
     dispatcher = updater.dispatcher
 
-    # 可以设置这个日志模块，
-    # 这样你就会知道为什么和什么时候事情没有按预期工作
+    #You can set this logging module,
+    #so you will know when and why things do not work as expected
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                         level=logging.INFO)
 
-    # 注册处理消息的调度器：
-    # 这里我们注册一个回显调度器
+    # register a dispatcher to handle message:
+    # here we register an echo dispatcher
     echo_handler = MessageHandler(Filters.text & (~Filters.command), echo)
     dispatcher.add_handler(echo_handler)
 
-    # 启动机器人：
+    # To start the bot:
     updater.start_polling()
     updater.idle()
 
